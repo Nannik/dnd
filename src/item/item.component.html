@@ -1,0 +1,42 @@
+<div
+  class="item"
+  [class.drag]="isDragging"
+  [class.show-top-border]="showTopBorder"
+  [class.show-bottom-border]="showBottomBorder"
+  draggable="true"
+  (dragstart)="handleDragStart($event)"
+  (dragend)="handleDragEnd($event)"
+  (dragover)="handleDragOver($event)"
+  (dragleave)="handleDragLeave($event)"
+  [attr.data-item-id]="data.id"
+>
+  <h4>{{data.title}}</h4>
+
+  <ul class="list">
+    @for(item of data.items; track item.id) {
+      <li>
+        <Item
+          [data]="item"
+          [parent]="data"
+          [hoverPadding]="hoverPadding"
+          (onItemDragEnd)="handleChildDragEnd($event)"
+        ></Item>
+      </li>
+    }
+
+    @if(data.lvl < 4) {
+      <li>
+        <div class="item">
+          <h4>
+            <input
+            type="text"
+            placeholder="new item"
+            (change)="handleNewElement($event)"
+            />
+          </h4>
+        </div>
+      </li>
+    }
+  </ul>
+</div>
+
